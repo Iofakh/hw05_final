@@ -8,3 +8,34 @@ requests==2.26.0
 six==1.16.0
 sorl-thumbnail==12.7.0
 Faker==12.0.1
+
+
+WARNING: Running pip as root will break packages and permissions. You should install packages reliably by using venv: https://pip.pypa.io/warnings/venv
+----------------------- Проверка flake8 пройдена -----------------------
+
+============================= test session starts ==============================
+platform linux -- Python 3.7.4, pytest-6.2.4, py-1.10.0, pluggy-0.13.1 -- /usr/local/bin/python
+django: settings: yatube.settings (from env)
+rootdir: /app, configfile: pytest.ini
+plugins: Faker-12.0.1, django-4.4.0, pythonpath-0.7.3
+collecting ... collected 12 items / 2 errors / 10 selected
+
+==================================== ERRORS ====================================
+______________ ERROR collecting yatube/posts/tests/test_forms.py _______________
+yatube/posts/tests/test_forms.py:15: in <module>
+    TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.TEST_DIR)
+/usr/local/lib/python3.7/tempfile.py:366: in mkdtemp
+    _os.mkdir(file, 0o700)
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/yatube/tmp/tmpt837j4_m'
+______________ ERROR collecting yatube/posts/tests/test_views.py _______________
+yatube/posts/tests/test_views.py:13: in <module>
+    TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.TEST_DIR)
+/usr/local/lib/python3.7/tempfile.py:366: in mkdtemp
+    _os.mkdir(file, 0o700)
+E   FileNotFoundError: [Errno 2] No such file or directory: '/app/yatube/tmp/tmpa40sz1yn'
+=========================== short test summary info ============================
+ERROR yatube/posts/tests/test_forms.py - FileNotFoundError: [Errno 2] No such...
+ERROR yatube/posts/tests/test_views.py - FileNotFoundError: [Errno 2] No such...
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 2 errors in 0.19s ===============================
+======================== Ваши тесты не работают ========================
