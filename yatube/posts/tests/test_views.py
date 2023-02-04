@@ -60,7 +60,6 @@ class ViewsTests(TestCase):
             self.assertEqual(post.group.id, self.post.group.id)
             self.assertEqual(post.image, self.post.image)
 
-
     def test_forms_show_correct_context(self):
         """Проверка коректности формы post_create/edit."""
         response = self.authorized_client.get(reverse('posts:post_create'))

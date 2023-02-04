@@ -39,11 +39,14 @@ class StaticURLTests(TestCase):
         """URL-адрес использует соответствующий шаблон."""
         templates_url_names = {
             reverse("posts:index"): 'posts/index.html',
-            reverse("posts:posts", kwargs={'slug': self.group.slug}): 'posts/group_list.html',
-            reverse("posts:profile",  kwargs={'username': self.user}): 'posts/profile.html',
+            reverse("posts:posts", kwargs={'slug': self.group.slug}):
+            'posts/group_list.html',
+            reverse("posts:profile", kwargs={'username': self.user}):
+            'posts/profile.html',
             reverse("posts:post_detail", kwargs={'post_id': self.post.id}):
             'posts/post_detail.html',
-            reverse("posts:post_edit", kwargs={'post_id': self.post.id}): 'posts/post_create.html',
+            reverse("posts:post_edit", kwargs={'post_id': self.post.id}):
+            'posts/post_create.html',
             reverse("posts:post_create"): 'posts/post_create.html',
             '/unexisting_page/': 'core/404.html'
         }
@@ -57,9 +60,12 @@ class StaticURLTests(TestCase):
         """Страницы доступны любому пользователю."""
         urls = {
             reverse("posts:index"): HTTPStatus.OK,
-            reverse("posts:posts", kwargs={'slug': self.group.slug}): HTTPStatus.OK,
-            reverse("posts:profile",  kwargs={'username': self.user}): HTTPStatus.OK,
-            reverse("posts:post_detail", kwargs={'post_id': self.post.id}): HTTPStatus.OK,
+            reverse("posts:posts", kwargs={'slug': self.group.slug}):
+            HTTPStatus.OK,
+            reverse("posts:profile", kwargs={'username': self.user}):
+            HTTPStatus.OK,
+            reverse("posts:post_detail", kwargs={'post_id': self.post.id}):
+            HTTPStatus.OK,
             '/unexisting_page/': HTTPStatus.NOT_FOUND,
         }
         for url, http_status in urls.items():
@@ -71,10 +77,14 @@ class StaticURLTests(TestCase):
         """Страницы доступны авторизованному пользователю."""
         urls = {
             reverse("posts:index"): HTTPStatus.OK,
-            reverse("posts:posts", kwargs={'slug': self.group.slug}): HTTPStatus.OK,
-            reverse("posts:profile", kwargs={'username': self.user}): HTTPStatus.OK,
-            reverse("posts:post_detail", kwargs={'post_id': self.post.id}): HTTPStatus.OK,
-            reverse("posts:post_edit", kwargs={'post_id': self.post.id}): HTTPStatus.FOUND,
+            reverse("posts:posts", kwargs={'slug': self.group.slug}):
+            HTTPStatus.OK,
+            reverse("posts:profile", kwargs={'username': self.user}):
+            HTTPStatus.OK,
+            reverse("posts:post_detail", kwargs={'post_id': self.post.id}):
+            HTTPStatus.OK,
+            reverse("posts:post_edit", kwargs={'post_id': self.post.id}):
+            HTTPStatus.FOUND,
             reverse("posts:post_create"): HTTPStatus.OK,
         }
 
