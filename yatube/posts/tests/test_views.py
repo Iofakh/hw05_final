@@ -82,16 +82,16 @@ class ViewsTests(TestCase):
     def test_index_show_correct_context(self):
         """Шаблон index сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse('posts:index'))
-        self.context_attributes(response.context['page_obj'].first())
+        self.context_attributes(response.context['page_obj'][0])
 
     def test_group_list_show_correct_context(self):
         """Шаблон group_list сформирован с правильным контекстом."""
         response = self.authorized_client.get(
             reverse('posts:posts',
-                    kwargs={'slug': 'test_slug'})
+                    kwargs={'slug': 'slug'})
         )
         self.assertEqual(response.context['group'], self.group)
-        self.context_attributes(response.context['page_obj'].first())
+        self.context_attributes(response.context['page_obj'][0])
 
     def test_post_detail_show_correct_context(self):
         """Шаблон post_detail сформирован с правильным контекстом."""
@@ -108,7 +108,7 @@ class ViewsTests(TestCase):
                     kwargs={'username': self.user})
         )
         self.assertEqual(response.context['author'], self.user)
-        self.context_attributes(response.context['page_obj'].first())
+        self.context_attributes(response.context['page_obj'][0])
 
     def test_signup_forms_show_correct_context(self):
         """Проверка коректности формы signup."""
