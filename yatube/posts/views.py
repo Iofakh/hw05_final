@@ -71,18 +71,16 @@ def post_detail(request, post_id):
 @login_required
 def post_create(request):
     template = 'posts/post_create.html'
-    if request.POST:
-        form = PostForm(
-            request.POST or None,
-            files=request.FILES or None,
-        )
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect('posts:profile', request.user.username)
-    else:
-        form = PostForm()
+    form = PostForm(
+        request.POST or None,
+        files=request.FILES or None,
+    )
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        post.save()
+        return redirect('posts:profile', request.user.username)
+    form = PostForm()
     context = {
         'form': form,
     }
@@ -136,18 +134,13 @@ def follow_index(request):
 @login_required
 def profile_follow(request, username):
     user = request.user
-    author = User.objects.get(username=username)
-    is_follower = Follow.objects.filter(user=user, author=author)
-    if user != author and not is_follower.exists():
-        Follow.objects.create(user=user, author=author)
+    author = get_object_or_404(User, username=username)
+    if user != author:
+        Follow.objects.get_or_create(user=user, author=author)
     return redirect(reverse('posts:profile', args=[username]))
 
 
 @login_required
-def profile_unfollow(request, username):
-    # Дизлайк, отписка
-    author = get_object_or_404(User, username=username)
-    is_follower = Follow.objects.filter(user=request.user, author=author)
-    if is_follower.exists():
-        is_follower.delete()
-    return redirect('posts:profile', username=author)
+def profile_unfollow(request, username):    
+    Follow.objects.filter(author__username=username).delete()
+    return redirect('posts:index')

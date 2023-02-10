@@ -1,5 +1,6 @@
 import shutil
 import tempfile
+import time
 
 from django import forms
 from django.conf import settings
@@ -134,8 +135,10 @@ class ViewsTests(TestCase):
         delete_post = response.content
         Post.objects.filter(text='Текст кэша').delete()
         response = self.authorized_client.get(reverse('posts:index'))
-        self.assertEqual(delete_post, response.content)
-
+        self.assertEqual(delete_post, response.content)        
+        cache.clear()
+        response_clear = self.authorized_client.get(reverse('posts:index'))
+        self.assertNotEqual(response_clear.content, response.content)
 
 class PaginatorViewsTest(TestCase):
     @classmethod
